@@ -1,0 +1,26 @@
+### JetBrains template
+
+.idea/*
+!.idea/codeStyles/
+!.idea/inspectionProfiles/
+!.idea/encodings.xml
+
+# Gradle:
+*.iml
+
+# IntelliJ
+out/
+
+### Gradle template
+.gradle
+build/
+
+### Gradle Profiler
+gradle-user-home/
+profile-out*/
+
+### KotlinTest
+.kotlintest/
+
+### KotlinDL
+cache/
