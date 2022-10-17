@@ -50,18 +50,19 @@ abstract class JavaFxRule : ComponentMetadataRule {
 	private val buildNativeVariantClassifier =
 		nativeVariants[(WINDOWS to X86_64)]
 
+	// FIXME: Properly add all native variants.
+	//  For now we'll just add the missing compile and runtime
+	//  files for the build's native variant...
 	override fun execute(context: ComponentMetadataContext) {
+		println("*** Executing rule for context ${context.details}")
 		listOf("compile", "runtime").forEach { base ->
-			// FIXME: Properly add all native variants.
-			//  For now we'll just add the missing compile and runtime
-			//  dependencies for the build's native variant...
 			context.details.withVariant(base) {
-				withDependencies {
+				withFiles {
 					with(context.details.id) {
-						val nativeVariantDependency =
-							"$group:$name:$version:$buildNativeVariantClassifier"
-						println("*** Adding $nativeVariantDependency to $base")
-						add(nativeVariantDependency)
+						val nativeVariantClassifiedJar =
+							"$name-$version-$buildNativeVariantClassifier.jar"
+						println("*** Adding $nativeVariantClassifiedJar to $base")
+						addFile(nativeVariantClassifiedJar)
 					}
 				}
 			}
