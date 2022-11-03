@@ -1,86 +1,28 @@
 import org.gradle.api.tasks.wrapper.Wrapper.DistributionType.ALL
-import org.gradle.nativeplatform.MachineArchitecture.X86
-import org.gradle.nativeplatform.MachineArchitecture.X86_64
-import org.gradle.nativeplatform.OperatingSystemFamily.LINUX
-import org.gradle.nativeplatform.OperatingSystemFamily.WINDOWS
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
+// Without these suppressions version catalog usage here and in other build
+// files is marked red by IntelliJ:
+// https://youtrack.jetbrains.com/issue/KTIJ-19369.
+@Suppress(
+	"DSL_SCOPE_VIOLATION",
+	"MISSING_DEPENDENCY_CLASS",
+	"UNRESOLVED_REFERENCE_WRONG_RECEIVER",
+	"FUNCTION_CALL_EXPECTED"
+)
 plugins {
-	kotlin("jvm") version "1.7.20"
+	alias(libs.plugins.dependency.analysis.gradle.plugin)
+	// Kotlin plugin declaration needed here for the Dependency Analysis Plugin,
+	// but with `apply false` since the root project itself isn't a Kotlin
+	// project:
+	// https://github.com/autonomousapps/dependency-analysis-android-gradle-plugin/wiki/FAQ#typenotpresentexception-type-orgjetbrainskotlingradledslkotlinprojectextension-in-kotlin-jvm-library
+	alias(libs.plugins.kotlin.gradle.plugin) apply false
+	alias(libs.plugins.versions.gradle.plugin)
 }
 
 group = "com.ianbrandt"
 version = "1.0-SNAPSHOT"
 
-repositories {
-	mavenCentral()
-}
-
-dependencies {
-	components {
-		withModule<JavaFxRule>("org.openjfx:javafx-base")
-		withModule<JavaFxRule>("org.openjfx:javafx-controls")
-		withModule<JavaFxRule>("org.openjfx:javafx-fxml")
-		withModule<JavaFxRule>("org.openjfx:javafx-graphics")
-		withModule<JavaFxRule>("org.openjfx:javafx-swing")
-		withModule<JavaFxRule>("org.openjfx:javafx-web")
-	}
-
-	val javaFxVersion = "19"
-
-	api("org.openjfx:javafx-base:$javaFxVersion")
-	api("org.openjfx:javafx-controls:$javaFxVersion")
-	api("org.openjfx:javafx-fxml:$javaFxVersion")
-	api("org.openjfx:javafx-graphics:$javaFxVersion")
-	api("org.openjfx:javafx-swing:$javaFxVersion")
-	api("org.openjfx:javafx-web:$javaFxVersion")
-}
-
-@CacheableRule
-abstract class JavaFxRule : ComponentMetadataRule {
-
-	// TODO: Add remaining JavaFX native variants.
-	private val nativeVariants = mapOf(
-		(LINUX to X86_64) to "linux",
-		(WINDOWS to X86) to "win-x86",
-		(WINDOWS to X86_64) to "win",
-	)
-
-	// FIXME: Derive from current OS and architecture.
-	private val buildNativeVariantClassifier =
-		nativeVariants[(WINDOWS to X86_64)]
-
-	// FIXME: Properly add all native variants.
-	//  For now we'll just add the missing compile and runtime
-	//  files for the build's native variant...
-	override fun execute(context: ComponentMetadataContext) {
-		println("*** Executing rule for context ${context.details}")
-		listOf("compile", "runtime").forEach { base ->
-			context.details.withVariant(base) {
-				withFiles {
-					with(context.details.id) {
-						val nativeVariantClassifiedJar =
-							"$name-$version-$buildNativeVariantClassifier.jar"
-						println("*** Adding $nativeVariantClassifiedJar to $base")
-						addFile(nativeVariantClassifiedJar)
-					}
-				}
-			}
-		}
-	}
-}
-
 tasks {
-
-	withType<Test>().configureEach {
-		useJUnitPlatform()
-	}
-
-	withType<KotlinCompile>().configureEach {
-		kotlinOptions {
-			jvmTarget = JavaVersion.VERSION_17.toString()
-		}
-	}
 
 	named<Wrapper>("wrapper").configure {
 		gradleVersion = "7.5.1"
