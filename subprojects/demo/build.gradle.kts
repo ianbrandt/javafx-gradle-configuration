@@ -14,5 +14,5 @@ dependencies {
 
 	api(platform("com.ianbrandt.platforms:app-platform"))
 
-	api(libs.bundles.javafx)
+	api(libs.javafx.graphics)
 }
