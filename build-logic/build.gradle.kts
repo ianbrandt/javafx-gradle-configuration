@@ -8,4 +8,5 @@ dependencies {
 
 	implementation(libs.dependency.analysis.gradle.plugin.dependency)
 	implementation(libs.kotlin.gradle.plugin.dependency)
+	implementation(libs.os.detector.gradle.plugin.dependency)
 }
