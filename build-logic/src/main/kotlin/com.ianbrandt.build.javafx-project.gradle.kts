@@ -1,39 +1,49 @@
-import org.gradle.nativeplatform.MachineArchitecture.X86
-import org.gradle.nativeplatform.MachineArchitecture.X86_64
-import org.gradle.nativeplatform.OperatingSystemFamily.LINUX
-import org.gradle.nativeplatform.OperatingSystemFamily.WINDOWS
-
 plugins {
 	`java-library`
 	id("com.google.osdetector")
 }
 
+val currentOs: String = osdetector.os
+val currentArch: String = osdetector.arch
+
 dependencies {
 	components {
-		withModule<JavaFxRule>("org.openjfx:javafx-base")
-		withModule<JavaFxRule>("org.openjfx:javafx-controls")
-		withModule<JavaFxRule>("org.openjfx:javafx-fxml")
-		withModule<JavaFxRule>("org.openjfx:javafx-graphics")
-		withModule<JavaFxRule>("org.openjfx:javafx-swing")
-		withModule<JavaFxRule>("org.openjfx:javafx-web")
+		withModule<JavaFxRule>("org.openjfx:javafx-base") {
+			params(currentOs, currentArch)
+		}
+		withModule<JavaFxRule>("org.openjfx:javafx-controls") {
+			params(currentOs, currentArch)
+		}
+		withModule<JavaFxRule>("org.openjfx:javafx-fxml") {
+			params(currentOs, currentArch)
+		}
+		withModule<JavaFxRule>("org.openjfx:javafx-graphics") {
+			params(currentOs, currentArch)
+		}
+		withModule<JavaFxRule>("org.openjfx:javafx-swing") {
+			params(currentOs, currentArch)
+		}
+		withModule<JavaFxRule>("org.openjfx:javafx-web") {
+			params(currentOs, currentArch)
+		}
 	}
 }
 
 @CacheableRule
-abstract class JavaFxRule : ComponentMetadataRule {
+abstract class JavaFxRule @Inject constructor(
+	currentOs: String,
+	currentArch: String,
+) : ComponentMetadataRule {
 
 	// TODO: Add remaining JavaFX native variants.
 	private val nativeVariants = mapOf(
-		(LINUX to X86_64) to "linux",
-		(WINDOWS to X86) to "win-x86",
-		(WINDOWS to X86_64) to "win",
+		("linux" to "x86_64") to "linux",
+		("windows" to "x86") to "win-x86",
+		("windows" to "x86_64") to "win",
 	)
 
-	private val currentOs: String = osdetector.os
-	private val currentArch: String = osdetector.arch
-
 	private val buildNativeVariantClassifier: String =
-		nativeVariants[(currentOs to currentArch)]
+		nativeVariants[currentOs to currentArch]
 			?: throw GradleException(
 				"No known JavaFX native runtime variant for build OS " +
 						"'$currentOs' and architecture '$currentArch'"
