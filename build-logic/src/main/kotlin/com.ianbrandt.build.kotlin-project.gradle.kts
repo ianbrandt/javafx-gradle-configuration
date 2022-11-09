@@ -9,7 +9,7 @@ plugins {
 	id("com.autonomousapps.dependency-analysis")
 }
 
-val javaTargetVersion = JavaVersion.VERSION_17
+val javaTargetVersion = JavaVersion.VERSION_17.toString()
 val kotlinTargetVersion = "1.7"
 
 dependencies {
@@ -17,24 +17,23 @@ dependencies {
 	runtimeOnly(kotlin("reflect"))
 }
 
-java {
-	sourceCompatibility = javaTargetVersion
-	targetCompatibility = javaTargetVersion
-}
-
 tasks {
+
+	withType<JavaCompile>().configureEach {
+		sourceCompatibility = javaTargetVersion
+		targetCompatibility = javaTargetVersion
+	}
 
 	withType<KotlinCompile>().configureEach {
 		kotlinOptions {
-
+			languageVersion = kotlinTargetVersion
+			apiVersion = kotlinTargetVersion
+			jvmTarget = javaTargetVersion
 			freeCompilerArgs = listOf(
 				"-Xjsr305=strict",
 			)
 
-			languageVersion = kotlinTargetVersion
-			apiVersion = kotlinTargetVersion
-			jvmTarget = javaTargetVersion.toString()
-
+			// https://github.com/gradle/gradle/issues/17271
 			val compileJava: JavaCompile by tasks
 			destinationDirectory.set(compileJava.destinationDirectory)
 		}

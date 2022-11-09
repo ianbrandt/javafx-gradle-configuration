@@ -18,9 +18,3 @@ build/
 ### Gradle Profiler
 gradle-user-home/
 profile-out*/
-
-### KotlinTest
-.kotlintest/
-
-### KotlinDL
-cache/

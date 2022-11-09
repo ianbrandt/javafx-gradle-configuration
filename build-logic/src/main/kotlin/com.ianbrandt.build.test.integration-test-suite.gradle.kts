@@ -12,8 +12,6 @@ val integrationTestSuiteName = "integrationTest"
 testing {
 	suites {
 
-		val test by getting(JvmTestSuite::class)
-
 		register<JvmTestSuite>(integrationTestSuiteName) {
 
 			dependencies {
@@ -35,6 +33,7 @@ testing {
 						filter {
 							includeTestsMatching("*IT")
 						}
+						val test by getting(JvmTestSuite::class)
 						shouldRunAfter(test)
 					}
 				}
