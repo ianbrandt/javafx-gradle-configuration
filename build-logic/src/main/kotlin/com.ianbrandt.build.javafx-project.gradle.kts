@@ -35,9 +35,11 @@ abstract class JavaFxRule @Inject constructor(
 	currentArch: String,
 ) : ComponentMetadataRule {
 
-	// TODO: Add remaining JavaFX native variants.
 	private val nativeVariants = mapOf(
 		("linux" to "x86_64") to "linux",
+		("linux" to "aarch_64") to "linux-aarch64",
+		("mac" to "x86_64") to "mac",
+		("mac" to "aarch_64") to "mac-aarch64",
 		("windows" to "x86") to "win-x86",
 		("windows" to "x86_64") to "win",
 	)
