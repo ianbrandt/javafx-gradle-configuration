@@ -35,44 +35,80 @@ abstract class JavaFxRule @Inject constructor(
 	currentArch: String,
 ) : ComponentMetadataRule {
 
-	private val nativeVariants = mapOf(
-		("linux" to "x86_64") to "linux",
-		("linux" to "aarch_64") to "linux-aarch64",
-		("mac" to "x86_64") to "mac",
-		("mac" to "aarch_64") to "mac-aarch64",
-		("windows" to "x86") to "win-x86",
-		("windows" to "x86_64") to "win",
+	@get:Inject
+	abstract val objects: ObjectFactory
+
+	private val platformToClassifierMap = mapOf(
+		Platform("linux", "x86_64") to "linux",
+		Platform("linux", "aarch_64") to "linux-aarch64",
+		Platform("mac", "x86_64") to "mac",
+		Platform("mac", "aarch_64") to "mac-aarch64",
+		Platform("windows", "x86") to "win-x86",
+		Platform("windows", "x86_64") to "win",
 	)
 
-	private val buildNativeVariantClassifier: String =
-		nativeVariants[currentOs to currentArch]
+	private val buildPlatformClassifier: String =
+		platformToClassifierMap[Platform(currentOs, currentArch)]
 			?: throw GradleException(
-				"No known JavaFX native runtime variant for build OS " +
+				"No supported JavaFX platform known for build OS " +
 						"'$currentOs' and architecture '$currentArch'"
 			)
 
 	override fun execute(context: ComponentMetadataContext) {
 
-		// FIXME: Properly add all native variants.
-		//  For now we'll just add the missing compile and runtime
-		//  files for the build's native variant...
-		listOf("compile", "runtime").forEach { base ->
+		val componentDetails = context.details
+		val componentName = componentDetails.id.name
+		val componentVersion = componentDetails.id.version
 
-			context.details.withVariant(base) {
+		listOf("compile", "runtime").forEach { baseVariant ->
+
+			componentDetails.withVariant(baseVariant) {
 
 				withFiles {
 
-					with(context.details.id) {
+					val nativePlatformClassifiedJar =
+						"$componentName-$componentVersion-$buildPlatformClassifier.jar"
 
-						val nativeVariantClassifiedJar =
-							"$name-$version-$buildNativeVariantClassifier.jar"
+					addFile(nativePlatformClassifiedJar)
+				}
+			}
+		}
 
-						addFile(nativeVariantClassifiedJar)
+		platformToClassifierMap.forEach { platformToClassifierEntry ->
+
+			val os = platformToClassifierEntry.key.os
+			val arch = platformToClassifierEntry.key.arch
+			val classifier = platformToClassifierEntry.value
+
+			listOf("compile", "runtime").forEach { baseVariant ->
+
+				componentDetails.addVariant(
+					"$classifier-$baseVariant",
+					baseVariant
+				) {
+					attributes {
+						attributes.attribute(
+							OperatingSystemFamily.OPERATING_SYSTEM_ATTRIBUTE,
+							objects.named(os)
+						)
+						attributes.attribute(
+							MachineArchitecture.ARCHITECTURE_ATTRIBUTE,
+							objects.named(arch)
+						)
+					}
+					withFiles {
+						addFile("${componentName}-${componentVersion}.jar")
+						addFile("${componentName}-${componentVersion}-$classifier.jar")
 					}
 				}
 			}
 		}
 
-		// TODO: Also add Monocle variants.
+		// TODO: Also add Monocle variants?
 	}
+
+	private data class Platform(
+		val os: String,
+		val arch: String,
+	)
 }
