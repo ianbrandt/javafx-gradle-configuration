@@ -19,8 +19,10 @@ plugins {
 	alias(libs.plugins.versions.gradle.plugin)
 }
 
-group = "com.ianbrandt"
-version = "1.0-SNAPSHOT"
+allprojects {
+	group = "com.ianbrandt"
+	version = "1.0-SNAPSHOT"
+}
 
 tasks {
 
