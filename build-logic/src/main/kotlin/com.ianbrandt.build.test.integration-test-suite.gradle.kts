@@ -1,5 +1,4 @@
 plugins {
-	idea
 	`jvm-test-suite`
 	kotlin("jvm")
 	id("com.ianbrandt.build.test.unit-test-suite")
@@ -11,6 +10,8 @@ val integrationTestSuiteName = "integrationTest"
 testing {
 	suites {
 
+		val test by getting(JvmTestSuite::class)
+
 		register<JvmTestSuite>(integrationTestSuiteName) {
 
 			dependencies {
@@ -18,11 +19,15 @@ testing {
 			}
 
 			sources {
+				val sourcesRootDir = "src/it"
 				java {
-					setSrcDirs(listOf("src/it/java"))
+					setSrcDirs(listOf("$sourcesRootDir/java"))
 				}
 				kotlin {
-					setSrcDirs(listOf("src/it/kotlin"))
+					setSrcDirs(listOf("$sourcesRootDir/kotlin"))
+				}
+				resources {
+					setSrcDirs(listOf("$sourcesRootDir/resources"))
 				}
 			}
 
@@ -30,9 +35,11 @@ testing {
 				all {
 					testTask.configure {
 						filter {
-							includeTestsMatching("*IT")
+							val testSuffix = "IT"
+							includeTestsMatching("*$testSuffix")
+							// Support JUnit @Nested tests
+							includeTestsMatching("*$testSuffix$*")
 						}
-						val test by getting(JvmTestSuite::class)
 						shouldRunAfter(test)
 					}
 				}
@@ -59,16 +66,5 @@ tasks {
 	named<Task>("check").configure {
 		val integrationTest by existing
 		dependsOn(integrationTest)
-	}
-}
-
-idea {
-	module {
-		testSources.from(
-			kotlin.sourceSets[integrationTestSuiteName].kotlin.srcDirs
-		)
-		testResources.from(
-			kotlin.sourceSets[integrationTestSuiteName].resources.srcDirs
-		)
 	}
 }

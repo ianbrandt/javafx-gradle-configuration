@@ -41,8 +41,8 @@ abstract class JavaFxRule @Inject constructor(
 	private val platformToClassifierMap = mapOf(
 		Platform("linux", "x86_64") to "linux",
 		Platform("linux", "aarch_64") to "linux-aarch64",
-		Platform("mac", "x86_64") to "mac",
-		Platform("mac", "aarch_64") to "mac-aarch64",
+		Platform("osx", "x86_64") to "mac",
+		Platform("osx", "aarch_64") to "mac-aarch64",
 		Platform("windows", "x86") to "win-x86",
 		Platform("windows", "x86_64") to "win",
 	)

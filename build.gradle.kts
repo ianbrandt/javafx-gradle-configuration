@@ -1,3 +1,5 @@
+import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
+import com.github.benmanes.gradle.versions.updates.gradle.GradleReleaseChannel.CURRENT
 import org.gradle.api.tasks.wrapper.Wrapper.DistributionType.ALL
 
 // Without these suppressions version catalog usage here and in other build
@@ -25,9 +27,26 @@ allprojects {
 }
 
 tasks {
+	withType<DependencyUpdatesTask>().configureEach {
+		rejectVersionIf {
+			isNonStable(candidate.version)
+		}
+		gradleReleaseChannel = CURRENT.id
+	}
 
 	named<Wrapper>("wrapper").configure {
-		gradleVersion = "7.6"
+		gradleVersion = "8.0.2"
 		distributionType = ALL
 	}
+}
+
+fun isNonStable(version: String): Boolean {
+	val stableKeyword = listOf("RELEASE", "FINAL", "GA").any {
+		version.uppercase().contains(it)
+	}
+	val unstableKeyword =
+		version.uppercase().contains("""M\d+""".toRegex())
+	val regex = "^[0-9,.v-]+(-r)?$".toRegex()
+	val isStable = (stableKeyword && !unstableKeyword) || regex.matches(version)
+	return isStable.not()
 }

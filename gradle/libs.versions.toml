@@ -1,17 +1,17 @@
 [versions]
 
-assertj = "3.23.1"
-dependency-analysis-gradle-plugin = "1.17.0"
+assertj = "3.24.2"
+dependency-analysis-gradle-plugin = "1.19.0"
 equalsverifier = "3.11"
-javafx = "19"
+javafx = "19.0.2.1"
 jetbrains-annotations = "23.0.0"
-junit = "5.9.1"
-kotlin = "1.7.21"
+junit = "5.9.2"
+kotlin = "1.8.10"
 kotlinx-coroutines = "1.6.4"
 mockk = "1.13.2"
 os-detector-gradle-plugin = "1.7.1"
 slf4j = "2.0.3"
-versions-gradle-plugin = "0.44.0"
+versions-gradle-plugin = "0.46.0"
 
 [libraries]
 
