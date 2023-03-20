@@ -5,3 +5,36 @@ An attempt to use a native
 for JavaFX dependency configuration instead of the usual
 [JavaFX Gradle Plugin](https://github.com/openjfx/javafx-gradle-plugin)
 approach.
+
+## Rationale
+
+There are several issues with the JavaFX Gradle Plugin in its current state:
+
+* It does not currently support resolving dependencies for platforms other than
+the current OS
+([except via a workaround](https://github.com/openjfx/javafx-gradle-plugin#4-cross-platform-projects-and-libraries)),
+which is needed to build
+[distributions](https://docs.gradle.org/current/userguide/distribution_plugin.html)
+for platforms besides the build OS.
+* It does not support declaring the
+proper Gradle dependency configurations (e.g. "api", "implementation", etc.) on
+a per-project, per-artifact basis, which is needed to create JavaFX
+library modules that convey proper transitive dependency information.
+* It arguably overreaches in its manipulation of the module path and classpath
+(openjfx/javafx-gradle-plugin#133).
+* It doesn't currently support the Kotlin Gradle Plugin 1.7+
+(openjfx/javafx-gradle-plugin#138).
+* A cacheable `ComponentMetadataRule` may prove to be a more performant way to
+resolve JavaFX dependencies (TBD).
+
+## Source
+
+See the
+[javafx-project.gradle.kts](build-logic/src/main/kotlin/com.ianbrandt.build.javafx-project.gradle.kts)
+precompiled script plugin for the crux of the configuration.
+
+## OS Detection
+
+Google's
+[OS Detector Plugin for Gradle](https://github.com/google/osdetector-gradle-plugin)
+is used for determining the current OS and architecture.
