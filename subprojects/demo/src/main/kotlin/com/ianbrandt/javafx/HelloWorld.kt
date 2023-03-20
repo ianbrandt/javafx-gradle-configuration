@@ -8,7 +8,7 @@ class HelloWorld : Application() {
 	companion object {
 		@JvmStatic
 		fun main(args: Array<String>) {
-			launch(*args)
+			launch(HelloWorld::class.java, *args)
 		}
 	}
 
