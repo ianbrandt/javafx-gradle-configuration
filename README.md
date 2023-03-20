@@ -38,3 +38,15 @@ precompiled script plugin for the crux of the configuration.
 Google's
 [OS Detector Plugin for Gradle](https://github.com/google/osdetector-gradle-plugin)
 is used for determining the current OS and architecture.
+
+## Upstream Issues
+
+Further development on this is currently being limited by upstream issues.
+My primary use case for this is a mixed Kotlin and Java Project that will
+require incremental migration to JPMS, and these Kotlin Gradle Plugin and
+IntelliJ IDEA issues are currently blocking that:
+
+* https://youtrack.jetbrains.com/issue/KT-20740
+* https://youtrack.jetbrains.com/issue/KT-55389
+* https://youtrack.jetbrains.com/issue/IDEA-220886
+* https://youtrack.jetbrains.com/issue/IDEA-304601
