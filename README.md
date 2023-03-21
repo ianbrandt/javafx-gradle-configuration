@@ -2,9 +2,9 @@
 
 An attempt to use
 [Gradle's built-in Java Platform Module System support](https://docs.gradle.org/current/userguide/java_library_plugin.html#sec:java_library_modular)
-along with a [`ComponentMetadataRule`](https://docs.gradle.org/current/userguide/component_metadata_rules.html)
-for JavaFX dependency configuration instead of the usual
-[JavaFX Gradle Plugin](https://github.com/openjfx/javafx-gradle-plugin)
+and a [`ComponentMetadataRule`](https://docs.gradle.org/current/userguide/component_metadata_rules.html)
+for JavaFX dependency configuration. This would be an alternative to the
+current [JavaFX Gradle Plugin](https://github.com/openjfx/javafx-gradle-plugin)
 approach.
 
 ## Rationale
