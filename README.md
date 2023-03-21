@@ -1,7 +1,8 @@
 # JavaFX Gradle Configuration
 
-An attempt to use a native
-[Gradle `ComponentMetadataRule`](https://docs.gradle.org/current/userguide/component_metadata_rules.html)
+An attempt to use
+[Gradle's built-in Java Platform Module System support](https://docs.gradle.org/current/userguide/java_library_plugin.html#sec:java_library_modular)
+along with a [`ComponentMetadataRule`](https://docs.gradle.org/current/userguide/component_metadata_rules.html)
 for JavaFX dependency configuration instead of the usual
 [JavaFX Gradle Plugin](https://github.com/openjfx/javafx-gradle-plugin)
 approach.
@@ -15,11 +16,11 @@ the current OS
 ([except via a workaround](https://github.com/openjfx/javafx-gradle-plugin#4-cross-platform-projects-and-libraries)),
 which is needed to build
 [distributions](https://docs.gradle.org/current/userguide/distribution_plugin.html)
-for platforms besides the build OS.
-* It does not support declaring the
-proper Gradle dependency configurations (e.g. "api", "implementation", etc.) on
-a per-project, per-artifact basis, which is needed to create JavaFX
-library modules that convey proper transitive dependency information.
+for platforms other than the build OS.
+* It does not support declaring the Gradle dependency configurations (e.g.
+"api", "implementation", etc.) on a per-project, per-artifact basis, which is
+needed to create JavaFX library modules that convey proper transitive
+dependency information.
 * It arguably overreaches in its manipulation of the module path and classpath
 (openjfx/javafx-gradle-plugin#133).
 * It doesn't currently support the Kotlin Gradle Plugin 1.7+
