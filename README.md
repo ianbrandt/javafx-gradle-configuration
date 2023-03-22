@@ -49,5 +49,5 @@ IntelliJ IDEA issues are currently blocking that:
 
 * https://youtrack.jetbrains.com/issue/KT-20740
 * https://youtrack.jetbrains.com/issue/KT-55389
-* https://youtrack.jetbrains.com/issue/IDEA-220886
+* ~~https://youtrack.jetbrains.com/issue/IDEA-220886~~ (Resolved as a duplicate of IDEA-304601)
 * https://youtrack.jetbrains.com/issue/IDEA-304601
