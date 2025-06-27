@@ -1,9 +1,4 @@
-plugins {
-	id("org.gradle.toolchains.foojay-resolver-convention") version "0.4.0"
-}
-
 dependencyResolutionManagement {
-	@Suppress("UnstableApiUsage")
 	versionCatalogs {
 		create("libs") {
 			from(files("../gradle/libs.versions.toml"))
@@ -12,6 +7,11 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "platforms"
+
+gradle.beforeProject {
+	group = "com.ianbrandt.platforms"
+	version = "1.0.0-SNAPSHOT"
+}
 
 include("app-platform")
 include("test-platform")

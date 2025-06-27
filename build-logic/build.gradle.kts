@@ -4,21 +4,15 @@ plugins {
 	`kotlin-dsl`
 }
 
-kotlin {
-	jvmToolchain {
-		languageVersion.set(
-			JavaLanguageVersion.of(
-				JavaVersion.VERSION_11.toString()
-			)
-		)
-	}
-}
+group = "com.ianbrandt.buildlogic"
+version = "1.0.0-SNAPSHOT"
 
 dependencies {
 
 	implementation(platform("com.ianbrandt.platforms:plugins-platform"))
 
-	implementation(libs.dependency.analysis.gradle.plugin.dependency)
-	implementation(libs.kotlin.gradle.plugin.dependency)
-	implementation(libs.os.detector.gradle.plugin.dependency)
+	implementation(libs.dependencyAnalysis.gradlePluginDependency)
+	implementation(libs.jvmDependencyConflictResolution.gradlePluginDependency)
+	implementation(libs.kotlin.gradlePluginDependency)
+	implementation(libs.osDetector.gradlePluginDependency)
 }

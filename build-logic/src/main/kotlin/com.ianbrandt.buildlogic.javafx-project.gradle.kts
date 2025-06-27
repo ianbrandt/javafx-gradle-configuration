@@ -1,5 +1,4 @@
 plugins {
-	`java-library`
 	id("com.google.osdetector")
 }
 
@@ -51,7 +50,7 @@ abstract class JavaFxRule @Inject constructor(
 		platformToClassifierMap[Platform(currentOs, currentArch)]
 			?: throw GradleException(
 				"No supported JavaFX platform known for build OS " +
-						"'$currentOs' and architecture '$currentArch'"
+					"'$currentOs' and architecture '$currentArch'"
 			)
 
 	override fun execute(context: ComponentMetadataContext) {

@@ -2,8 +2,6 @@ plugins {
 	id("java-platform")
 }
 
-group = "com.ianbrandt.platforms"
-
 dependencies {
 	constraints {
 		api(libs.bundles.javafx)

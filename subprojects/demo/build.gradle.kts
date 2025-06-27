@@ -1,8 +1,8 @@
 plugins {
 	application
-	id("com.ianbrandt.build.javafx-project")
-	id("com.ianbrandt.build.kotlin-project")
-	id("com.ianbrandt.build.test.unit-test-suite")
+	id("com.ianbrandt.buildlogic.javafx-project")
+	id("com.ianbrandt.buildlogic.kotlin-project")
+	id("com.ianbrandt.buildlogic.test.unit-test-suite")
 }
 
 application {
@@ -14,5 +14,5 @@ dependencies {
 
 	api(platform("com.ianbrandt.platforms:app-platform"))
 
-	api(libs.javafx.graphics)
+	implementation(libs.javafx.graphics)
 }
