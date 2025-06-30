@@ -1,6 +1,6 @@
 package com.ianbrandt.buildlogic.plugins.javafx
 
-import com.ianbrandt.buildlogic.tasks.JvmTask
+import com.ianbrandt.buildlogic.plugins.javafx.JavaFXNonModularPlugins.configureNonModularJavaFXTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.artifacts.Configuration
@@ -9,6 +9,12 @@ import org.gradle.kotlin.dsl.getByType
 import org.gradle.kotlin.dsl.withType
 import org.gradle.testing.base.TestingExtension
 
+/**
+ * A plugin for projects that use JavaFX from any non-modular Gradle JVM Test
+ * Suite plugin test suites. Moves any JavaFX dependencies found on the runtime
+ * classpath of the `Test` task of such suites to the module path as roots.
+ * Does nothing if the task is already modular.
+ */
 @Suppress("unused")
 open class JavaFXNonModularTestSuitePlugin : Plugin<Project> {
 
@@ -28,8 +34,7 @@ open class JavaFXNonModularTestSuitePlugin : Plugin<Project> {
 							project.configurations
 								.getByName("${name}RuntimeClasspath")
 
-						JvmTask.forTask(this)
-							.configureNonModularJavaFXTask(runtimeClasspath)
+						configureNonModularJavaFXTask(this, runtimeClasspath)
 					}
 				}
 			}

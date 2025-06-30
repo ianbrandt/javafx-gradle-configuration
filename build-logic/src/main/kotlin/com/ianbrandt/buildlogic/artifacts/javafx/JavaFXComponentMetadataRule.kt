@@ -37,11 +37,10 @@ abstract class JavaFXComponentMetadataRule : ComponentMetadataRule {
 			val arch = platformToClassifierEntry.key.arch
 			val classifier = platformToClassifierEntry.value
 
-			// TODO: Also add Monocle variants?
 			listOf("compile", "runtime").forEach { baseVariant ->
 
-				componentDetails.addVariant(
-					"$classifier-$baseVariant",
+				componentDetails.maybeAddVariant(
+					"$baseVariant-$classifier",
 					baseVariant
 				) {
 					attributes {
@@ -55,7 +54,9 @@ abstract class JavaFXComponentMetadataRule : ComponentMetadataRule {
 						)
 					}
 					withFiles {
+						// Remove the empty non-classified JAR.
 						removeAllFiles()
+						// Add only the classified JAR.
 						addFile("${componentName}-${componentVersion}-$classifier.jar")
 					}
 				}
