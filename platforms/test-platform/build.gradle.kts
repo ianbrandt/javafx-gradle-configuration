@@ -13,5 +13,6 @@ dependencies {
 	constraints {
 		api(libs.assertj)
 		api(libs.bundles.mockk.jvm)
+		api(libs.bundles.testfx)
 	}
 }

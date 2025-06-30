@@ -1,6 +1,7 @@
 package com.ianbrandt.buildlogic.plugins.javafx
 
 import com.ianbrandt.buildlogic.plugins.javafx.JavaFXArtifacts.JAVAFX_GROUP_ID
+import com.ianbrandt.buildlogic.plugins.javafx.JavaFXArtifacts.TESTFX_GROUP_ID
 import com.ianbrandt.buildlogic.plugins.javafx.JavaFXArtifacts.deriveModuleNamesFromModulePath
 import org.gradle.api.GradleException
 import org.gradle.api.Task
@@ -32,7 +33,8 @@ internal object JavaFXNonModularPlugins {
 			runtimeClasspath.incoming.artifactView {
 				componentFilter { componentIdentifier ->
 					componentIdentifier is ModuleComponentIdentifier
-						&& componentIdentifier.group == JAVAFX_GROUP_ID
+						&& componentIdentifier.group in
+						listOf(JAVAFX_GROUP_ID, TESTFX_GROUP_ID)
 				}
 			}.files
 

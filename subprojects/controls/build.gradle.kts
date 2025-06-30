@@ -1,12 +1,11 @@
 plugins {
 	id("com.ianbrandt.buildlogic.javafx-project")
+	id("com.ianbrandt.buildlogic.javafx-non-modular-test-suite")
 	id("com.ianbrandt.buildlogic.kotlin-project")
-	id("com.ianbrandt.buildlogic.test.unit-test-suite")
+	id("com.ianbrandt.buildlogic.test.ui-test-suite")
 }
 
 dependencies {
-
-	api(platform("com.ianbrandt.platforms:app-platform"))
 
 	api(libs.javafx.controls)
 

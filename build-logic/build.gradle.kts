@@ -20,12 +20,14 @@ dependencies {
 gradlePlugin {
 	plugins {
 		register("javaFxNonModularApplicationPlugin") {
-			id = "com.ianbrandt.buildlogic.javafx-non-modular-application-plugin"
-			implementationClass = "com.ianbrandt.buildlogic.plugins.javafx.JavaFXNonModularApplicationPlugin"
+			id = "com.ianbrandt.buildlogic.javafx-non-modular-application"
+			implementationClass =
+				"com.ianbrandt.buildlogic.plugins.javafx.JavaFXNonModularApplicationPlugin"
 		}
 		register("javaFxNonModularTestSuitePlugin") {
-			id = "com.ianbrandt.buildlogic.javafx-non-modular-test-suite-plugin"
-			implementationClass = "com.ianbrandt.buildlogic.plugins.javafx.JavaFXNonModularTestSuitePlugin"
+			id = "com.ianbrandt.buildlogic.javafx-non-modular-test-suite"
+			implementationClass =
+				"com.ianbrandt.buildlogic.plugins.javafx.JavaFXNonModularTestSuitePlugin"
 		}
 	}
 }

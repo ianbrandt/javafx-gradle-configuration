@@ -12,6 +12,8 @@ kotlinx-coroutines = "1.10.2"
 mockk = "1.14.3"
 osDetector-gradlePlugin = "1.7.3"
 slf4j = "2.0.17"
+testfx = "4.0.18"
+testfx-monocle = "21.0.2"
 versionsCheck-gradlePlugin = "0.52.0"
 
 [libraries]
@@ -103,6 +105,18 @@ version.ref = "osDetector-gradlePlugin"
 module = "org.slf4j:slf4j-simple"
 version.ref = "slf4j"
 
+[libraries.testfx-core]
+module = "org.testfx:testfx-core"
+version.ref = "testfx"
+
+[libraries.testfx-junit5]
+module = "org.testfx:testfx-junit5"
+version.ref = "testfx"
+
+[libraries.testfx-monocle]
+module = "org.testfx:openjfx-monocle"
+version.ref = "testfx-monocle"
+
 [bundles]
 
 javafx = [
@@ -121,6 +135,8 @@ kotlinx-coroutines-jvm = [
 ]
 
 mockk-jvm = ["mockk", "mockk-dsl-jvm"]
+
+testfx = ["testfx-core", "testfx-junit5", "testfx-monocle"]
 
 [plugins]
 

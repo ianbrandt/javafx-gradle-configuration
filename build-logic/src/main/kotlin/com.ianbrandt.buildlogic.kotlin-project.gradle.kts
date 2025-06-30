@@ -13,6 +13,11 @@ plugins {
 
 val javaTargetVersion: String = JavaVersion.VERSION_21.toString()
 
+dependencies {
+
+	api(platform("com.ianbrandt.platforms:app-platform"))
+}
+
 tasks {
 
 	withType<KotlinCompile>().configureEach {

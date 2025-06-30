@@ -15,6 +15,11 @@ internal object JavaFXArtifacts {
 	const val JAVAFX_GROUP_ID = "org.openjfx"
 
 	/**
+	 * The group ID for published TestFX artifacts.
+	 */
+	const val TESTFX_GROUP_ID = "org.testfx"
+
+	/**
 	 * Get the set of JavaFX module names that correspond to any JavaFX
 	 * artifacts found on the given path.
 	 */
@@ -30,6 +35,9 @@ internal object JavaFXArtifacts {
 				moduleFile.path.contains("javafx-media") -> "javafx.media"
 				moduleFile.path.contains("javafx-swing") -> "javafx.swing"
 				moduleFile.path.contains("javafx-web") -> "javafx.web"
+				moduleFile.path.contains("testfx-core") -> "org.testfx"
+				moduleFile.path.contains("testfx-junit5") -> "org.testfx.junit5"
+				moduleFile.path.contains("openjfx-monocle") -> "org.testfx.monocle"
 				else -> {
 					throw GradleException("Unknown JavaFX module: $moduleFile")
 				}
