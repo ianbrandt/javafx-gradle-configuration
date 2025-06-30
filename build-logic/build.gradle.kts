@@ -16,3 +16,16 @@ dependencies {
 	implementation(libs.kotlin.gradlePluginDependency)
 	implementation(libs.osDetector.gradlePluginDependency)
 }
+
+gradlePlugin {
+	plugins {
+		register("javaFxNonModularApplicationPlugin") {
+			id = "com.ianbrandt.buildlogic.javafx-non-modular-application-plugin"
+			implementationClass = "com.ianbrandt.buildlogic.plugins.javafx.JavaFXNonModularApplicationPlugin"
+		}
+		register("javaFxNonModularTestSuitePlugin") {
+			id = "com.ianbrandt.buildlogic.javafx-non-modular-test-suite-plugin"
+			implementationClass = "com.ianbrandt.buildlogic.plugins.javafx.JavaFXNonModularTestSuitePlugin"
+		}
+	}
+}

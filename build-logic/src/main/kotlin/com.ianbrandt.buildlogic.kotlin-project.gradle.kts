@@ -15,14 +15,6 @@ val javaTargetVersion: String = JavaVersion.VERSION_21.toString()
 
 tasks {
 
-	// Per https://github.com/gradle/gradle/issues/17271, Kotlin modules only
-	// compile if the Kotlin compiler destination directory is set to that of
-	// the Java compiler.
-	named<KotlinCompile>("compileKotlin").configure {
-		val compileJava by getting(JavaCompile::class)
-		destinationDirectory.set(compileJava.destinationDirectory)
-	}
-
 	withType<KotlinCompile>().configureEach {
 		compilerOptions {
 			optIn.addAll(

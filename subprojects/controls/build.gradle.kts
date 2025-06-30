@@ -7,4 +7,9 @@ plugins {
 dependencies {
 
 	api(platform("com.ianbrandt.platforms:app-platform"))
+
+	api(libs.javafx.controls)
+
+	implementation(libs.javafx.base)
+	implementation(libs.javafx.graphics)
 }

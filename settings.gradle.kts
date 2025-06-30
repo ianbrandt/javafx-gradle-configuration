@@ -37,7 +37,5 @@ gradle.beforeProject {
 	version = "1.0-SNAPSHOT"
 }
 
-include("subprojects:automatic-module")
-include("subprojects:demo")
-include("subprojects:named-module")
-include("subprojects:unnamed-module")
+include("subprojects:app")
+include("subprojects:controls")
