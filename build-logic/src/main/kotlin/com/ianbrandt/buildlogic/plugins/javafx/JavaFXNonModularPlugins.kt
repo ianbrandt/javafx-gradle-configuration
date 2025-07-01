@@ -1,7 +1,6 @@
 package com.ianbrandt.buildlogic.plugins.javafx
 
 import com.ianbrandt.buildlogic.plugins.javafx.JavaFXArtifacts.JAVAFX_GROUP_ID
-import com.ianbrandt.buildlogic.plugins.javafx.JavaFXArtifacts.TESTFX_GROUP_ID
 import com.ianbrandt.buildlogic.plugins.javafx.JavaFXArtifacts.deriveModuleNamesFromModulePath
 import org.gradle.api.GradleException
 import org.gradle.api.Task
@@ -34,7 +33,7 @@ internal object JavaFXNonModularPlugins {
 				componentFilter { componentIdentifier ->
 					componentIdentifier is ModuleComponentIdentifier
 						&& componentIdentifier.group in
-						listOf(JAVAFX_GROUP_ID, TESTFX_GROUP_ID)
+						setOf(JAVAFX_GROUP_ID)
 				}
 			}.files
 
@@ -76,6 +75,6 @@ internal object JavaFXNonModularPlugins {
 	 * Determines whether a task is modular based on the presence or absence of
 	 * the module path JVM argument.
 	 */
-	fun JavaForkOptions.isModular(): Boolean =
-		jvmArgs?.any { it == "--module-path" || it == "-p" } == true
+	private fun JavaForkOptions.isModular(): Boolean =
+		jvmArgs?.any { it == "--module-path" || it == "-p" } ?: false
 }

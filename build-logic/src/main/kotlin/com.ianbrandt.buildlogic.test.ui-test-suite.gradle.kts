@@ -36,17 +36,17 @@ configure<TestingExtension> {
 						}
 						jvmArgs(
 							"--add-exports",
-							"javafx.base/com.sun.javafx.logging=org.testfx.monocle",
+							"javafx.base/com.sun.javafx.logging=ALL-UNNAMED",
 							"--add-exports",
-							"javafx.graphics/com.sun.glass.ui=org.testfx.monocle",
+							"javafx.graphics/com.sun.glass.ui=ALL-UNNAMED",
 							"--add-exports",
-							"javafx.graphics/com.sun.javafx.application=org.testfx",
+							"javafx.graphics/com.sun.javafx.application=ALL-UNNAMED",
 							"--add-exports",
-							"javafx.graphics/com.sun.javafx.util=org.testfx.monocle",
+							"javafx.graphics/com.sun.javafx.util=ALL-UNNAMED",
 							"--add-opens",
-							"javafx.graphics/com.sun.glass.ui=org.testfx",
+							"javafx.graphics/com.sun.glass.ui=ALL-UNNAMED",
 							"--add-opens",
-							"javafx.graphics/com.sun.javafx.application=org.testfx",
+							"javafx.graphics/com.sun.javafx.application=ALL-UNNAMED",
 						)
 					}
 				}
