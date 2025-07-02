@@ -1,53 +1,70 @@
 # JavaFX Gradle Configuration
 
-An attempt to use
-[Gradle's built-in Java Platform Module System support](https://docs.gradle.org/current/userguide/java_library_plugin.html#sec:java_library_modular)
-and a [`ComponentMetadataRule`](https://docs.gradle.org/current/userguide/component_metadata_rules.html)
-for JavaFX dependency configuration. This would be an alternative to the
-current [JavaFX Gradle Plugin](https://github.com/openjfx/javafx-gradle-plugin)
-approach.
+Use a
+[`ComponentMetadataRule`](https://docs.gradle.org/current/userguide/component_metadata_rules.html)
+for JavaFX dependency configuration. This would be an alternative to the current
+[JavaFX Gradle Plugin](https://github.com/openjfx/javafx-gradle-plugin)
+implementation.
 
 ## Rationale
 
-There are several issues with the JavaFX Gradle Plugin in its current state:
+There are a few issues with the JavaFX Gradle Plugin in its current
+([0.1.0](https://github.com/openjfx/javafx-gradle-plugin/releases/tag/0.1.0))
+state:
 
-* It does not currently support resolving dependencies for platforms other than
-the current OS
-([except via a workaround](https://github.com/openjfx/javafx-gradle-plugin#4-cross-platform-projects-and-libraries)),
-which is needed to build
-[distributions](https://docs.gradle.org/current/userguide/distribution_plugin.html)
-for platforms other than the build OS.
+* Its component metadata rule is not straightforward to use on its own due to
+coupling with other classes from the plugin (e.g. the temporal coupling to
+`JavaFXPlatform.detect(osDetector)`) and to the 'com.google.osdetector' plugin.
 * It does not support declaring the Gradle dependency configurations (e.g.
 "api", "implementation", etc.) on a per-project, per-artifact basis, which is
 needed to create JavaFX library modules that convey proper transitive
 dependency information.
-* It arguably overreaches in its manipulation of the module path and classpath
-(openjfx/javafx-gradle-plugin#133).
-* It doesn't currently support the Kotlin Gradle Plugin 1.7+
-(openjfx/javafx-gradle-plugin#138).
-* A cacheable `ComponentMetadataRule` may prove to be a more performant way to
-resolve JavaFX dependencies (TBD).
+* It can't be applied to plugins that also apply the Application plugin (e.g.
+by way of a convention plugin) unless the `run` task also has JavaFX
+dependencies (it tries to set the `--module-path` to an empty string in this
+case).
+* It doesn't handle non-modular `Test` tasks as it otherwise does `run` tasks.
+* It doesn't handle non-modular `JavaExec` tasks besides the `run` task from
+the Application plugin (e.g. the `bootRun` task from the Spring Boot Gradle
+Plugin).
 
 ## Source
 
-See the
-[javafx-project.gradle.kts](build-logic/src/main/kotlin/com.ianbrandt.build.javafx-project.gradle.kts)
-precompiled script plugin for the crux of the configuration.
+See
+[javafx-project.gradle.kts](build-logic/src/main/kotlin/com.ianbrandt.buildlogic.javafx-project.gradle.kts)
+for the crux of the configuration.
 
-## OS Detection
+See
+[native-dependency-convention.gradle.kts](build-logic/src/main/kotlin/com.ianbrandt.buildlogic.native-dependency-convention.gradle.kts)
+for use of Google's
+[OS Detector Gradle Plugin](https://github.com/google/osdetector-gradle-plugin)
+and
+[attribute disambiguation rules](https://docs.gradle.org/current/userguide/variant_attributes.html#sec:abm-disambiguation-rules)
+to select correct the JavaFX artifacts for the current OS and architecture.
+This is broken out as components with native variants besides JavaFX may want
+to use the same variant disambiguation approach.
 
-Google's
-[OS Detector Plugin for Gradle](https://github.com/google/osdetector-gradle-plugin)
-is used for determining the current OS and architecture.
+See
+[JavaFXNonModularApplicationPlugin.kt](build-logic/src/main/kotlin/com/ianbrandt/buildlogic/plugins/javafx/JavaFXNonModularApplicationPlugin.kt)
+for handling of non-modular
+applications. This is broken out so it can be individually applied as needed.
+
+See
+[JavaFXNonModularTestSuitePlugin.kt](build-logic/src/main/kotlin/com/ianbrandt/buildlogic/plugins/javafx/JavaFXNonModularTestSuitePlugin.kt)
+for handling of non-modular test suites.
+This is broken out so it can be individually applied as needed.
 
 ## Upstream Issues
 
-Further development on this is currently being limited by upstream issues.
-My primary use case for this is a mixed Kotlin and Java Project that will
-require incremental migration to JPMS, and these Kotlin Gradle Plugin and
-IntelliJ IDEA issues are currently blocking that:
+The need for non-modular applications and test suite handling is currently driven
+by several upstream issues with Kotlin and IntelliJ support for JPMS:
 
-* https://youtrack.jetbrains.com/issue/KT-20740
-* https://youtrack.jetbrains.com/issue/KT-55389
-* ~~https://youtrack.jetbrains.com/issue/IDEA-220886~~ (Resolved as a duplicate of IDEA-304601)
-* ~~https://youtrack.jetbrains.com/issue/IDEA-304601~~ (Fixed)
+* https://youtrack.jetbrains.com/issue/KT-20740/Support-Xadd-exports-Xadd-reads-Xpatch-module-similar-to-javacs-add-exports-add-reads-patch-module
+* https://youtrack.jetbrains.com/issue/KT-55389/Gradle-plugin-should-expose-an-extension-method-to-automatically-enable-JPMS-for-Kotlin-compiled-output
+* https://youtrack.jetbrains.com/issue/KT-57937/IC-compileKotlin-seems-to-ignore-module-info-errors-randomly
+* https://youtrack.jetbrains.com/issue/KT-60582/IC-does-not-handle-changes-to-module-info.java-properly
+* https://youtrack.jetbrains.com/issue/KT-60583/Kotlin-compilation-with-module-info.java-h[…]recognize-changed-module-info.class-files-in-dependencies
+* https://youtrack.jetbrains.com/issue/KT-63674/JVM-IC-Treat-module-info.java-package-info.java-as-Input-properties-for-Kotlin-compilation-Gradle-part
+* https://youtrack.jetbrains.com/issue/KT-63675/JVM-IC-Treat-module-info.java-package-info.java-as-Input-properties-for-Kotlin-compilation-IC-part
+* https://youtrack.jetbrains.com/issue/KTIJ-27483/Run-configurations-are-not-picking-app-configuration-from-build.gradle.kts-as-described-in-docs
+* https://youtrack.jetbrains.com/issue/IDEA-154038/IDEA-doesnt-respect-Gradle-compiler-settings
