@@ -14,18 +14,19 @@ state:
 
 * Its component metadata rule is not particularly straightforward to use on its
 own due to coupling with other classes from the plugin (e.g. the temporal
-coupling to `JavaFXPlatform.detect(osDetector)`).
+coupling to `JavaFXPlatform.detect(osDetector)` having been called before it's
+invoked).
 * It doesn't support declaring dependency configurations (e.g.
 `api`, `implementation`, etc.) on a per-artifact basis, which is needed for
 JavaFX library modules to convey proper transitive dependency information.
-* It can't be applied to plugins that also apply the Application plugin (e.g.
-by way of a convention) unless the `run` task also has JavaFX dependencies (it
-tries to set the `--module-path` to an empty string in this case).
-* It doesn't handle non-modular `Test` tasks as it otherwise does the
-Application plugin's `run` task.
+* It can't be applied to projects that also apply the Application plugin (e.g.
+by way of a convention plugin) unless the `run` task also has JavaFX
+dependencies (it tries to set the `--module-path` to an empty string in this
+case).
 * It doesn't handle non-modular `JavaExec` tasks besides the `run` task from
 the Application plugin (e.g. the `bootRun` task from the Spring Boot Gradle
 Plugin).
+* It doesn't handle non-modular `Test` tasks.
 
 ## Source
 
@@ -40,8 +41,8 @@ for use of Google's
 and
 [attribute disambiguation rules](https://docs.gradle.org/current/userguide/variant_attributes.html#sec:abm-disambiguation-rules)
 to select correct the JavaFX artifacts for the current OS and architecture.
-This is broken out as components with native variants besides JavaFX may want
-to use the same variant disambiguation approach.
+This is broken out because components with native variants besides JavaFX may
+want to use the same variant disambiguation approach.
 
 See
 [JavaFXNonModularApplicationPlugin.kt](build-logic/src/main/kotlin/com/ianbrandt/buildlogic/plugins/javafx/JavaFXNonModularApplicationPlugin.kt)

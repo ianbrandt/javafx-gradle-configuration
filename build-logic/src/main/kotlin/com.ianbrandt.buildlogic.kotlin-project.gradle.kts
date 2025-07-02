@@ -43,12 +43,4 @@ tasks {
 			isFork = true
 		}
 	}
-
-	withType<Test>().configureEach {
-		jvmArgs(
-			// For Mockito:
-			// https://javadoc.io/doc/org.mockito/mockito-core/latest/org.mockito/org/mockito/Mockito.html#0.3
-			"-XX:+EnableDynamicAgentLoading",
-		)
-	}
 }
