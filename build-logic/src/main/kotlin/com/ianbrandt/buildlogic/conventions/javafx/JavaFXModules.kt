@@ -1,4 +1,4 @@
-package com.ianbrandt.buildlogic.plugins.javafx
+package com.ianbrandt.buildlogic.conventions.javafx
 
 import com.ianbrandt.buildlogic.tasks.nonmodular.ModulePathInfo
 import org.gradle.api.GradleException

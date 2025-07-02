@@ -45,12 +45,12 @@ This is broken out because components with native variants besides JavaFX may
 want to use the same variant disambiguation approach.
 
 See
-[JavaFXNonModularApplicationPlugin.kt](build-logic/src/main/kotlin/com/ianbrandt/buildlogic/plugins/javafx/JavaFXNonModularApplicationPlugin.kt)
+[javafx-non-modular-application.gradle.kts](build-logic/src/main/kotlin/com.ianbrandt.buildlogic.javafx-non-modular-application.gradle.kts)
 for handling of non-modular
 applications. This is broken out so it can be individually applied as needed.
 
 See
-[JavaFXNonModularTestSuitePlugin.kt](build-logic/src/main/kotlin/com/ianbrandt/buildlogic/plugins/javafx/JavaFXNonModularTestSuitePlugin.kt)
+[javafx-non-modular-test-suite.gradle.kts](build-logic/src/main/kotlin/com.ianbrandt.buildlogic.javafx-non-modular-test-suite.gradle.kts)
 for handling of non-modular test suites.
 This is broken out so it can be individually applied as needed.
 

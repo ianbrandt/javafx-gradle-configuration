@@ -1,4 +1,4 @@
-import com.ianbrandt.buildlogic.conventions.CustomJvmTestSuiteConvention.registerCustomJvmTestSuite
+import com.ianbrandt.buildlogic.conventions.test.CustomJvmTestSuiteConvention.registerCustomJvmTestSuite
 
 registerCustomJvmTestSuite(
 	testSuiteName = "integrationTest",

@@ -1,4 +1,4 @@
-package com.ianbrandt.buildlogic.conventions
+package com.ianbrandt.buildlogic.conventions.test
 
 import com.autonomousapps.DependencyAnalysisSubExtension
 import com.ianbrandt.buildlogic.test.Compilations.TEST_FIXTURES_COMPILATION_NAME
@@ -45,6 +45,11 @@ object CustomJvmTestSuiteConvention {
 			}
 		}
 
+		tasks.named<Task>("check").configure {
+			val testTask = tasks.named<Task>(testSuiteName)
+			dependsOn(testTask)
+		}
+
 		pluginManager.withPlugin("org.jetbrains.kotlin.jvm") {
 			configure<KotlinJvmProjectExtension> {
 				target {
@@ -64,21 +69,18 @@ object CustomJvmTestSuiteConvention {
 			}
 		}
 
-		tasks.named<Task>("check").configure {
-			val testTask = tasks.named<Task>(testSuiteName)
-			dependsOn(testTask)
-		}
-
-		configure<DependencyAnalysisSubExtension> {
-			abi {
-				exclusions {
-					excludeSourceSets(testSuiteName)
+		pluginManager.withPlugin("com.autonomousapps.dependency-analysis") {
+			configure<DependencyAnalysisSubExtension> {
+				abi {
+					exclusions {
+						excludeSourceSets(testSuiteName)
+					}
 				}
-			}
-			issues {
-				// Ignore test source set to work around
-				// https://github.com/autonomousapps/dependency-analysis-gradle-plugin/issues/1239.
-				ignoreSourceSet(testSuiteName)
+				issues {
+					// Ignore test source set to work around
+					// https://github.com/autonomousapps/dependency-analysis-gradle-plugin/issues/1239.
+					ignoreSourceSet(testSuiteName)
+				}
 			}
 		}
 	}
