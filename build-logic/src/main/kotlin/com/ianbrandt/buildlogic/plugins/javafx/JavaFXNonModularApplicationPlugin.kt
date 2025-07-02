@@ -1,6 +1,7 @@
 package com.ianbrandt.buildlogic.plugins.javafx
 
-import com.ianbrandt.buildlogic.plugins.javafx.JavaFXNonModularPlugins.configureNonModularJavaFXTask
+import com.ianbrandt.buildlogic.plugins.javafx.JavaFXModules.getJavaFxModulePathInfo
+import com.ianbrandt.buildlogic.tasks.nonmodular.NonModularJvmTasks.configureNonModularJvmTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.artifacts.Configuration
@@ -25,7 +26,10 @@ open class JavaFXNonModularApplicationPlugin : Plugin<Project> {
 				val runtimeClasspath: Configuration =
 					project.configurations.getByName("runtimeClasspath")
 
-				configureNonModularJavaFXTask(this, runtimeClasspath)
+				val javaFxModulePathInfo =
+					getJavaFxModulePathInfo(runtimeClasspath, project.providers)
+
+				configureNonModularJvmTask(javaFxModulePathInfo)
 			}
 		}
 	}

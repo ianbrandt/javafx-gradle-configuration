@@ -1,4 +1,4 @@
-import com.ianbrandt.buildlogic.conventions.registerCustomJvmTestSuite
+import com.ianbrandt.buildlogic.conventions.CustomJvmTestSuiteConvention.registerCustomJvmTestSuite
 
 val testSuiteName = "uiTest"
 val testSuiteTestSuffix = "UIT"

@@ -8,6 +8,16 @@ import org.gradle.nativeplatform.MachineArchitecture
 import org.gradle.nativeplatform.OperatingSystemFamily
 import javax.inject.Inject
 
+/**
+ * A [ComponentMetadataRule] for adding JavaFX component metadata for
+ * platform-specific variants based on the operating system and architecture of
+ * the target platform.
+ *
+ * Attribute disambiguation rules can be used to select the variant for testing
+ * and running on the current platform, and artifact views can be used to
+ * reselect variants for building distributions or installers for other
+ * platforms.
+ */
 abstract class JavaFXComponentMetadataRule : ComponentMetadataRule {
 
 	companion object {
