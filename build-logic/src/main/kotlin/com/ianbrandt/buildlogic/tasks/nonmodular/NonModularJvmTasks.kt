@@ -12,21 +12,41 @@ import org.gradle.process.JavaForkOptions
  */
 object NonModularJvmTasks {
 
+	/**
+	 * Configures a [JavaExec] task to handle modular dependencies in a
+	 * non-modular project by adjusting the classpath and applying module path
+	 * settings.
+	 *
+	 * @param modulePathInfo An instance of `ModulePathInfo` containing the
+	 * collection of module artifacts to be moved from the classpath to the
+	 * module path, and a provider for the set of module names to be added as
+	 * module roots.
+	 */
 	fun JavaExec.configureNonModularJvmTask(
 		modulePathInfo: ModulePathInfo,
-	) = this.configureNonModularJvmTask(
+	) = configureNonModularJvmTask(
 		modulePathInfo,
 		{ moduleArtifacts: FileCollection ->
-			this.classpath = this.classpath.minus(moduleArtifacts)
+			classpath = classpath.minus(moduleArtifacts)
 		}
 	)
 
+	/**
+	 * Configures a [Test] task to handle modular dependencies in a
+	 * non-modular project by adjusting the classpath and applying module path
+	 * settings.
+	 *
+	 * @param modulePathInfo An instance of `ModulePathInfo` containing the
+	 * collection of module artifacts to be moved from the classpath to the
+	 * module path, and a provider for the set of module names to be added as
+	 * module roots.
+	 */
 	fun Test.configureNonModularJvmTask(
 		modulePathInfo: ModulePathInfo,
-	) = this.configureNonModularJvmTask(
+	) = configureNonModularJvmTask(
 		modulePathInfo,
 		{ moduleArtifacts: FileCollection ->
-			this.classpath = this.classpath.minus(moduleArtifacts)
+			classpath = classpath.minus(moduleArtifacts)
 		}
 	)
 
