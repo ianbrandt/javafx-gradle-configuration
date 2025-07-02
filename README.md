@@ -12,18 +12,17 @@ There are a few issues with the JavaFX Gradle Plugin in its current
 ([0.1.0](https://github.com/openjfx/javafx-gradle-plugin/releases/tag/0.1.0))
 state:
 
-* Its component metadata rule is not straightforward to use on its own due to
-coupling with other classes from the plugin (e.g. the temporal coupling to
-`JavaFXPlatform.detect(osDetector)`) and to the 'com.google.osdetector' plugin.
-* It does not support declaring the Gradle dependency configurations (e.g.
-"api", "implementation", etc.) on a per-project, per-artifact basis, which is
-needed to create JavaFX library modules that convey proper transitive
-dependency information.
+* Its component metadata rule is not particularly straightforward to use on its
+own due to coupling with other classes from the plugin (e.g. the temporal
+coupling to `JavaFXPlatform.detect(osDetector)`).
+* It doesn't support declaring dependency configurations (e.g.
+`api`, `implementation`, etc.) on a per-artifact basis, which is needed for
+JavaFX library modules to convey proper transitive dependency information.
 * It can't be applied to plugins that also apply the Application plugin (e.g.
-by way of a convention plugin) unless the `run` task also has JavaFX
-dependencies (it tries to set the `--module-path` to an empty string in this
-case).
-* It doesn't handle non-modular `Test` tasks as it otherwise does `run` tasks.
+by way of a convention) unless the `run` task also has JavaFX dependencies (it
+tries to set the `--module-path` to an empty string in this case).
+* It doesn't handle non-modular `Test` tasks as it otherwise does the
+Application plugin's `run` task.
 * It doesn't handle non-modular `JavaExec` tasks besides the `run` task from
 the Application plugin (e.g. the `bootRun` task from the Spring Boot Gradle
 Plugin).
