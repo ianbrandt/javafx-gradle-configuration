@@ -18,7 +18,7 @@ There are a few issues with the JavaFX Gradle Plugin in its current state:
   it's actually used (e.g. `api`, `implementation`, `testImplementation`, etc.).
   This can result in Gradle having inaccurate information about dependency
   usage, which may impact
-  [incremental compilation](https://docs.gradle.org/current/userguide/java_plugin.html#sec:incremental_compile).
+  [incremental compilation](https://docs.gradle.org/8.14.3/userguide/java_plugin.html#sec:incremental_compile).
   If tools to detect such issues are used (e.g. the
   [Dependency Analysis Gradle Plugin](https://github.com/autonomousapps/dependency-analysis-gradle-plugin)),
   exception configuration may be required.
@@ -31,7 +31,7 @@ There are a few issues with the JavaFX Gradle Plugin in its current state:
       [OS Detector Gradle Plugin](https://github.com/google/osdetector-gradle-plugin),
       which one may not want.
 * It can't be applied to projects that also apply the
-  [Application Plugin](https://docs.gradle.org/current/userguide/application_plugin.html)
+  [Application Plugin](https://docs.gradle.org/8.14.3/userguide/application_plugin.html)
   (e.g. by way of a convention plugin) unless the `run` task also has JavaFX
   dependencies (it tries to set the `--module-path` to an empty string in this
   case).
@@ -45,17 +45,17 @@ There are a few issues with the JavaFX Gradle Plugin in its current state:
 
 A
 [
-`ComponentMetadataRule`](https://docs.gradle.org/current/userguide/component_metadata_rules.html)
+`ComponentMetadataRule`](https://docs.gradle.org/8.14.3/userguide/component_metadata_rules.html)
 is still used (also named
 [
 `JavaFXComponentMetadataRule`](build-logic/src/main/kotlin/com/ianbrandt/buildlogic/artifacts/javafx/JavaFXComponentMetadataRule.kt)),
 but it has no coupling to the OS Detector Gradle Plugin. See
 [javafx-project.gradle.kts](build-logic/src/main/kotlin/com.ianbrandt.buildlogic.javafx-project.gradle.kts)
-for its use.
+for an example of use.
 
 Rather than
 [setting attributes on all compile and runtime configurations](https://github.com/openjfx/javafx-gradle-plugin/blob/0.1.0/src/main/java/org/openjfx/gradle/JavaFXOptions.java#L101),
-[attribute disambiguation rules](https://docs.gradle.org/current/userguide/variant_attributes.html#sec:abm-disambiguation-rules)
+[attribute disambiguation rules](https://docs.gradle.org/8.14.3/userguide/variant_attributes.html#sec:abm-disambiguation-rules)
 are registered to ensure the native variant for the current platform is
 selected. This is broken out to
 [native-dependency-convention.gradle.kts](build-logic/src/main/kotlin/com.ianbrandt.buildlogic.native-dependency-convention.gradle.kts),
@@ -73,7 +73,11 @@ or
 `OsDetector` extension functions](build-logic/src/main/kotlin/com/ianbrandt/buildlogic/plugins/osdetector/OsDetectorExtensions.kt)
 are used to translate its detected operating system and architecture values to
 corresponding values for Gradle's `OperatingSystemFamily` and
-`MachineArchitecture` attributes.
+`MachineArchitecture` attributes. Although not currently demonstrated,
+[artifact views](https://docs.gradle.org/8.14.3/userguide/artifact_views.html)
+could be used to select native variants for platforms other than the build
+platform, for example to build distributions or installers for other operating
+systems and architectures.
 
 Handling of JVM tasks (e.g. `JavaExec` and `Test`) in non-modular projects is
 generalized as
@@ -83,7 +87,13 @@ See
 and
 [javafx-non-modular-test-suite.gradle.kts](build-logic/src/main/kotlin/com.ianbrandt.buildlogic.javafx-non-modular-test-suite.gradle.kts)
 for usage examples. These are broken out so they can be individually applied as
-needed.
+needed. Rather than [filtering the
+`classpath`](https://github.com/openjfx/javafx-gradle-plugin/blob/0.1.0/src/main/java/org/openjfx/gradle/JavaFXPlugin.java#L113-L114),
+an
+[artifact view](https://docs.gradle.org/8.14.3/userguide/artifact_views.html)
+is used (see
+[
+`JavaFXModules.getJavaFxModulePathInfo(...)`](build-logic/src/main/kotlin/com/ianbrandt/buildlogic/conventions/javafx/JavaFXModules.kt)).
 
 ## Upstream Issues
 

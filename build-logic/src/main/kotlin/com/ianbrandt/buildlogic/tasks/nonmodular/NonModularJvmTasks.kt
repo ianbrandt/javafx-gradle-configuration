@@ -9,7 +9,7 @@ import org.gradle.process.JavaForkOptions
 /**
  * Provides configuration convention functions to set the module paths and roots
  * for JVM tasks of otherwise non-modular projects (i.e. projects for which
- * [Gradle's `java.modularity.inferModulePath` feature](https://docs.gradle.org/current/userguide/java_library_plugin.html#sec:java_library_modular)
+ * [Gradle's `java.modularity.inferModulePath` feature](https://docs.gradle.org/8.14.3/userguide/java_library_plugin.html#sec:java_library_modular)
  * does not apply).
  */
 object NonModularJvmTasks {
