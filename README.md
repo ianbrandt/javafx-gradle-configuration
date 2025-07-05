@@ -14,8 +14,8 @@ There are a few issues with the JavaFX Gradle Plugin in its current state:
   [declaring JavaFX modules](https://github.com/openjfx/javafx-gradle-plugin/tree/0.1.0?tab=readme-ov-file#2-specify-javafx-modules)
   at the project level, and then applying those to
   [all configured dependency scopes](https://github.com/openjfx/javafx-gradle-plugin/tree/0.1.0?tab=readme-ov-file#5-dependency-scope),
-  doesn't support declaring each JavaFX dependency in the specific scope where
-  it's actually used (e.g. `api`, `implementation`, `testImplementation`, etc.).
+  doesn't support declaring each JavaFX dependency in the specific scope it's
+  actually used (e.g. `api`, `implementation`, `testImplementation`, etc.).
   This can result in Gradle having inaccurate information about dependency
   usage, which may impact
   [incremental compilation](https://docs.gradle.org/8.14.3/userguide/java_plugin.html#sec:incremental_compile).
@@ -75,9 +75,9 @@ are used to translate its detected operating system and architecture values to
 corresponding values for Gradle's `OperatingSystemFamily` and
 `MachineArchitecture` attributes. Although not currently demonstrated,
 [artifact views](https://docs.gradle.org/8.14.3/userguide/artifact_views.html)
-could be used to select native variants for platforms other than the build
-platform, for example to build distributions or installers for other operating
-systems and architectures.
+could be used to select native variants for platforms other than the current
+build platform, for example to build distributions or installers for other
+operating systems and architectures.
 
 Handling of JVM tasks (e.g. `JavaExec` and `Test`) in non-modular projects is
 generalized as
@@ -88,12 +88,12 @@ and
 [javafx-non-modular-test-suite.gradle.kts](build-logic/src/main/kotlin/com.ianbrandt.buildlogic.javafx-non-modular-test-suite.gradle.kts)
 for usage examples. These are broken out so they can be individually applied as
 needed. Rather than [filtering the
-`classpath`](https://github.com/openjfx/javafx-gradle-plugin/blob/0.1.0/src/main/java/org/openjfx/gradle/JavaFXPlugin.java#L113-L114),
-an
+`classpath` for JavaFX artifacts by name](https://github.com/openjfx/javafx-gradle-plugin/blob/0.1.0/src/main/java/org/openjfx/gradle/JavaFXPlugin.java#L113-L114),
+a more efficient
 [artifact view](https://docs.gradle.org/8.14.3/userguide/artifact_views.html)
-is used (see
+is used to select artifacts by group (see
 [
-`JavaFXModules.getJavaFxModulePathInfo(...)`](build-logic/src/main/kotlin/com/ianbrandt/buildlogic/conventions/javafx/JavaFXModules.kt)).
+`JavaFXModules.getJavaFxModulePathInfo()`](build-logic/src/main/kotlin/com/ianbrandt/buildlogic/conventions/javafx/JavaFXModules.kt)).
 
 ## Upstream Issues
 
