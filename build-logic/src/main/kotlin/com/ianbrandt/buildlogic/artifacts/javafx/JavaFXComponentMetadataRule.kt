@@ -11,7 +11,8 @@ import javax.inject.Inject
 /**
  * A [ComponentMetadataRule] for adding JavaFX component metadata for
  * platform-specific variants based on the operating system and architecture of
- * the target platform.
+ * the target platform. Also aligns JavaFX dependency versions by creating a
+ * `org.openjfx:javafx-bom` virtual platform.
  *
  * Attribute disambiguation rules can be used to select the variant for testing
  * and running on the current platform, and artifact views can be used to
@@ -37,37 +38,41 @@ abstract class JavaFXComponentMetadataRule : ComponentMetadataRule {
 
 	override fun execute(context: ComponentMetadataContext) {
 
-		val componentDetails = context.details
-		val componentName = componentDetails.id.name
-		val componentVersion = componentDetails.id.version
+		context.details.apply {
 
-		PLATFORM_TO_CLASSIFIER_MAP.forEach { platformToClassifierEntry ->
+			// Align JavaFX dependencies to the same version with a virtual BOM.
+			belongsTo("org.openjfx:javafx-bom:${id.version}", true)
 
-			val os = platformToClassifierEntry.key.os
-			val arch = platformToClassifierEntry.key.arch
-			val classifier = platformToClassifierEntry.value
+			// Add native compile and runtime variants for all supported
+			// platforms.
+			PLATFORM_TO_CLASSIFIER_MAP.forEach { platformToClassifierEntry ->
 
-			listOf("compile", "runtime").forEach { baseVariant ->
+				val os = platformToClassifierEntry.key.os
+				val arch = platformToClassifierEntry.key.arch
+				val classifier = platformToClassifierEntry.value
 
-				componentDetails.maybeAddVariant(
-					"$baseVariant-$classifier",
-					baseVariant
-				) {
-					attributes {
-						attributes.attribute(
-							OperatingSystemFamily.OPERATING_SYSTEM_ATTRIBUTE,
-							objects.named(os)
-						)
-						attributes.attribute(
-							MachineArchitecture.ARCHITECTURE_ATTRIBUTE,
-							objects.named(arch)
-						)
-					}
-					withFiles {
-						// Remove the empty non-classified JAR.
-						removeAllFiles()
-						// Add only the classified JAR.
-						addFile("${componentName}-${componentVersion}-$classifier.jar")
+				listOf("compile", "runtime").forEach { baseVariant ->
+
+					maybeAddVariant(
+						"$baseVariant-$classifier",
+						baseVariant
+					) {
+						attributes {
+							attributes.attribute(
+								OperatingSystemFamily.OPERATING_SYSTEM_ATTRIBUTE,
+								objects.named(os)
+							)
+							attributes.attribute(
+								MachineArchitecture.ARCHITECTURE_ATTRIBUTE,
+								objects.named(arch)
+							)
+						}
+						withFiles {
+							// Remove the empty non-classified JAR.
+							removeAllFiles()
+							// Add only the classified JAR.
+							addFile("${id.name}-${id.version}-$classifier.jar")
+						}
 					}
 				}
 			}

@@ -51,7 +51,14 @@ is still used (also named
 `JavaFXComponentMetadataRule`](build-logic/src/main/kotlin/com/ianbrandt/buildlogic/artifacts/javafx/JavaFXComponentMetadataRule.kt)),
 but it has no coupling to the OS Detector Gradle Plugin. See
 [javafx-project.gradle.kts](build-logic/src/main/kotlin/com.ianbrandt.buildlogic.javafx-project.gradle.kts)
-for an example of use.
+for an example of use. Since there is currently no official BOM published for
+JavaFX, the rule also
+[creates a virtual platform](https://docs.gradle.org/8.14.3/userguide/how_to_align_dependency_versions.html#sec:align-versions-unpublished)
+to align all JavaFX dependency versions.
+
+There is no `javafx { ... }` extension with this approach. JavaFX dependency
+declarations and version management are all left to be done with the standard
+Gradle mechanisms.
 
 Rather than
 [setting attributes on all compile and runtime configurations](https://github.com/openjfx/javafx-gradle-plugin/blob/0.1.0/src/main/java/org/openjfx/gradle/JavaFXOptions.java#L101),
@@ -60,7 +67,7 @@ are registered to ensure the native variant for the current platform is
 selected. This is broken out to
 [native-dependency-convention.gradle.kts](build-logic/src/main/kotlin/com.ianbrandt.buildlogic.native-dependency-convention.gradle.kts),
 as it may be generally applicable to projects that have native dependencies
-besides JavaFX. The convention does still use the
+besides JavaFX. The convention script does still use the
 [OS Detector Gradle Plugin](https://github.com/google/osdetector-gradle-plugin)
 for detecting the current OS and architecture, but there is no explicit
 coupling between it and
