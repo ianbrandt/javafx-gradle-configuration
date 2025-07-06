@@ -98,7 +98,7 @@ needed. Rather than [filtering the
 `classpath` for JavaFX artifacts by name](https://github.com/openjfx/javafx-gradle-plugin/blob/0.1.0/src/main/java/org/openjfx/gradle/JavaFXPlugin.java#L113-L114),
 a more efficient
 [artifact view](https://docs.gradle.org/8.14.3/userguide/artifact_views.html)
-is used to select artifacts by group (see
+is used to select the JavaFX artifacts by group ID (see
 [
 `JavaFXModules.getJavaFxModulePathInfo()`](build-logic/src/main/kotlin/com/ianbrandt/buildlogic/conventions/javafx/JavaFXModules.kt)).
 
