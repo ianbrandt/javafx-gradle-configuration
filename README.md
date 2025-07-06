@@ -15,7 +15,7 @@ There are a few issues with the JavaFX Gradle Plugin in its current state:
   at the project level, and then applying those to
   [all configured dependency scopes](https://github.com/openjfx/javafx-gradle-plugin/tree/0.1.0?tab=readme-ov-file#5-dependency-scope),
   doesn't readily support declaring each JavaFX dependency in the specific scope
-  where it's actually used (e.g. `api`, `implementation`, `testImplementation`,
+  where it's used (e.g. `api`, `implementation`, `testImplementation`,
   etc.). This can result in Gradle having inaccurate information about
   dependency usage, which may impact
   [incremental compilation](https://docs.gradle.org/8.14.3/userguide/java_plugin.html#sec:incremental_compile).
