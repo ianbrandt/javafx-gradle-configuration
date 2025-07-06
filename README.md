@@ -15,11 +15,11 @@ There are a few issues with the JavaFX Gradle Plugin in its current state:
   at the project level, and then applying those to
   [all configured dependency scopes](https://github.com/openjfx/javafx-gradle-plugin/tree/0.1.0?tab=readme-ov-file#5-dependency-scope),
   doesn't readily support declaring each JavaFX dependency in the specific scope
-  where it's used (e.g. `api`, `implementation`, `testImplementation`,
+  where it's used (e.g., `api`, `implementation`, `testImplementation`,
   etc.). This can result in Gradle having inaccurate information about
   dependency usage, which may impact
   [incremental compilation](https://docs.gradle.org/8.14.3/userguide/java_plugin.html#sec:incremental_compile).
-  If tools to detect such issues are used (e.g. the
+  If tools to detect such issues are used (e.g., the
   [Dependency Analysis Gradle Plugin](https://github.com/autonomousapps/dependency-analysis-gradle-plugin)),
   additional exception configuration would typically be required.
     * One could work around this by not applying the JavaFX Gradle Plugin, and
@@ -32,11 +32,11 @@ There are a few issues with the JavaFX Gradle Plugin in its current state:
       which one may not want.
 * It can't be applied to projects that also apply the
   [Application Plugin](https://docs.gradle.org/8.14.3/userguide/application_plugin.html)
-  (e.g. by way of a convention plugin) unless the `run` task also has JavaFX
+  (e.g., by way of a convention plugin) unless the `run` task also has JavaFX
   dependencies (it tries to set the `--module-path` to an empty string in this
   case).
 * It doesn't handle non-modular `JavaExec` tasks besides the `run` task from
-  the Application Plugin (e.g., the
+  the Application Plugin (e.g.,
   [Spring Boot Gradle Plugin's
   `bootRun` task](https://docs.spring.io/spring-boot/gradle-plugin/running.html)).
 * It doesn't handle non-modular `Test` tasks.
@@ -83,10 +83,10 @@ corresponding values for Gradle's `OperatingSystemFamily` and
 `MachineArchitecture` attributes. Although not currently demonstrated,
 [artifact views](https://docs.gradle.org/8.14.3/userguide/artifact_views.html)
 could be used to select native variants for platforms other than the current
-build platform, for example to build distributions or installers for other
+build platform, for example, to build distributions or installers for other
 operating systems and architectures.
 
-Handling of JVM tasks (e.g. `JavaExec` and `Test`) in non-modular projects is
+Handling of JVM tasks (e.g., `JavaExec` and `Test`) in non-modular projects is
 generalized as
 [configuration convention functions](build-logic/src/main/kotlin/com/ianbrandt/buildlogic/tasks/nonmodular/NonModularJvmTasks.kt).
 See
