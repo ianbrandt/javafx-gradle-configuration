@@ -14,20 +14,20 @@ There are a few issues with the JavaFX Gradle Plugin in its current state:
   [declaring JavaFX modules](https://github.com/openjfx/javafx-gradle-plugin/tree/0.1.0?tab=readme-ov-file#2-specify-javafx-modules)
   at the project level, and then applying those to
   [all configured dependency scopes](https://github.com/openjfx/javafx-gradle-plugin/tree/0.1.0?tab=readme-ov-file#5-dependency-scope),
-  doesn't support declaring each JavaFX dependency in the specific scope it's
-  actually used (e.g. `api`, `implementation`, `testImplementation`, etc.).
-  This can result in Gradle having inaccurate information about dependency
-  usage, which may impact
+  doesn't readily support declaring each JavaFX dependency in the specific scope
+  where it's actually used (e.g. `api`, `implementation`, `testImplementation`,
+  etc.). This can result in Gradle having inaccurate information about
+  dependency usage, which may impact
   [incremental compilation](https://docs.gradle.org/8.14.3/userguide/java_plugin.html#sec:incremental_compile).
   If tools to detect such issues are used (e.g. the
   [Dependency Analysis Gradle Plugin](https://github.com/autonomousapps/dependency-analysis-gradle-plugin)),
-  exception configuration may be required.
-    * One could work around this by not applying the JavaFX Gradle Plugin.
-      Instead it could be added as a build script dependency, and its
+  additional exception configuration would typically be required.
+    * One could work around this by not applying the JavaFX Gradle Plugin, and
+      instead adding it as a build script dependency. Its
       [
       `JavaFXComponenentMetadataRule`](https://github.com/openjfx/javafx-gradle-plugin/blob/0.1.0/src/main/java/org/openjfx/gradle/metadatarule/JavaFXComponentMetadataRule.java)
-      could be used in isolation. That said, the rule does have a transitive
-      dependency on the
+      could then be used in isolation. That said, the rule does have a
+      transitive dependency on the
       [OS Detector Gradle Plugin](https://github.com/google/osdetector-gradle-plugin),
       which one may not want.
 * It can't be applied to projects that also apply the
@@ -57,7 +57,7 @@ JavaFX, the rule also
 to align all JavaFX dependency versions.
 
 There is no `javafx { ... }` extension with this approach. JavaFX dependency
-declarations and version management are all left to be done with the standard
+declarations and version management are left to be done with the standard
 Gradle mechanisms.
 
 Rather than

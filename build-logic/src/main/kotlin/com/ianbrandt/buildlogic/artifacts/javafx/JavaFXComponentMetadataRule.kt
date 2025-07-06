@@ -53,6 +53,11 @@ abstract class JavaFXComponentMetadataRule : ComponentMetadataRule {
 
 				listOf("compile", "runtime").forEach { baseVariant ->
 
+					// Only add the variants if the Gradle-inferred "compile"
+					// and "runtime" base variants exist. Presumably, if
+					// official Gradle metadata for JavaFX was ever published,
+					// these base variants would not exist, and the published
+					// metadata would be used instead.
 					maybeAddVariant(
 						"$baseVariant-$classifier",
 						baseVariant
