@@ -5,7 +5,13 @@ import org.gradle.api.artifacts.ComponentMetadataRule
 import org.gradle.api.model.ObjectFactory
 import org.gradle.kotlin.dsl.named
 import org.gradle.nativeplatform.MachineArchitecture
+import org.gradle.nativeplatform.MachineArchitecture.ARM64
+import org.gradle.nativeplatform.MachineArchitecture.X86
+import org.gradle.nativeplatform.MachineArchitecture.X86_64
 import org.gradle.nativeplatform.OperatingSystemFamily
+import org.gradle.nativeplatform.OperatingSystemFamily.LINUX
+import org.gradle.nativeplatform.OperatingSystemFamily.MACOS
+import org.gradle.nativeplatform.OperatingSystemFamily.WINDOWS
 import javax.inject.Inject
 
 /**
@@ -23,13 +29,14 @@ abstract class JavaFXComponentMetadataRule : ComponentMetadataRule {
 
 	companion object {
 
+		@Suppress("UnstableApiUsage")
 		private val PLATFORM_TO_CLASSIFIER_MAP = mapOf(
-			Platform("linux", "x86_64") to "linux",
-			Platform("linux", "aarch_64") to "linux-aarch64",
-			Platform("osx", "x86_64") to "mac",
-			Platform("osx", "aarch_64") to "mac-aarch64",
-			Platform("windows", "x86") to "win-x86",
-			Platform("windows", "x86_64") to "win",
+			Platform(LINUX, X86_64) to "linux",
+			Platform(LINUX, ARM64) to "linux-aarch64",
+			Platform(MACOS, X86_64) to "mac",
+			Platform(MACOS, ARM64) to "mac-aarch64",
+			Platform(WINDOWS, X86) to "win-x86",
+			Platform(WINDOWS, X86_64) to "win",
 		)
 	}
 

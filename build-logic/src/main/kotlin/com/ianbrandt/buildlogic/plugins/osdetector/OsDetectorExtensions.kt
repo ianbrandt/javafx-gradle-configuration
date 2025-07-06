@@ -3,6 +3,9 @@ package com.ianbrandt.buildlogic.plugins.osdetector
 import com.google.gradle.osdetector.OsDetector
 import org.gradle.api.GradleException
 import org.gradle.nativeplatform.MachineArchitecture
+import org.gradle.nativeplatform.MachineArchitecture.ARM64
+import org.gradle.nativeplatform.MachineArchitecture.X86
+import org.gradle.nativeplatform.MachineArchitecture.X86_64
 import org.gradle.nativeplatform.OperatingSystemFamily
 import org.gradle.nativeplatform.OperatingSystemFamily.LINUX
 import org.gradle.nativeplatform.OperatingSystemFamily.MACOS
@@ -15,8 +18,8 @@ import org.gradle.nativeplatform.OperatingSystemFamily.WINDOWS
  * @return A string representing the operating system attribute value.
  * @throws GradleException if the detected operating system is unrecognized.
  */
-fun OsDetector.osAsOperatingSystemFamilyAttributeValue(): String =
-	when (os) {
+val OsDetector.operatingSystemFamily: String
+	get() = when (os) {
 		"linux" -> LINUX
 		"osx" -> MACOS
 		"windows" -> WINDOWS
@@ -34,11 +37,11 @@ fun OsDetector.osAsOperatingSystemFamilyAttributeValue(): String =
  * @throws GradleException if the detected architecture is unrecognized.
  */
 @Suppress("UnstableApiUsage")
-fun OsDetector.archAsMachineArchitectureAttributeValue(): String =
-	when (arch) {
-		"x86_32" -> MachineArchitecture.X86
-		"x86_64" -> MachineArchitecture.X86_64
-		"aarch_64" -> MachineArchitecture.ARM64
+val OsDetector.machineArchitecture: String
+	get() = when (arch) {
+		"x86_32" -> X86
+		"x86_64" -> X86_64
+		"aarch_64" -> ARM64
 		else ->
 			throw GradleException(
 				"Unknown architecture: '$arch'!"

@@ -1,5 +1,7 @@
 import com.ianbrandt.buildlogic.attributes.nativeplatform.CurrentArchitectureAttributeDisambiguationRule
 import com.ianbrandt.buildlogic.attributes.nativeplatform.CurrentOsAttributeDisambiguationRule
+import com.ianbrandt.buildlogic.plugins.osdetector.machineArchitecture
+import com.ianbrandt.buildlogic.plugins.osdetector.operatingSystemFamily
 import org.gradle.nativeplatform.MachineArchitecture.ARCHITECTURE_ATTRIBUTE
 import org.gradle.nativeplatform.OperatingSystemFamily.OPERATING_SYSTEM_ATTRIBUTE
 
@@ -18,7 +20,9 @@ dependencies {
 				CurrentOsAttributeDisambiguationRule::class.java
 			) {
 				params(
-					objects.named<OperatingSystemFamily>(osdetector.os)
+					objects.named<OperatingSystemFamily>(
+						osdetector.operatingSystemFamily
+					)
 				)
 			}
 		}
@@ -27,7 +31,9 @@ dependencies {
 				CurrentArchitectureAttributeDisambiguationRule::class.java
 			) {
 				params(
-					objects.named<MachineArchitecture>(osdetector.arch)
+					objects.named<MachineArchitecture>(
+						osdetector.machineArchitecture
+					)
 				)
 			}
 		}
