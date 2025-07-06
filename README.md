@@ -23,7 +23,7 @@ There are a few issues with the JavaFX Gradle Plugin in its current state:
   [Dependency Analysis Gradle Plugin](https://github.com/autonomousapps/dependency-analysis-gradle-plugin)),
   additional exception configuration would typically be required.
     * One could work around this by not applying the JavaFX Gradle Plugin, and
-      instead adding it as a build script dependency. Its
+      instead just adding it as a build script dependency. Its
       [
       `JavaFXComponenentMetadataRule`](https://github.com/openjfx/javafx-gradle-plugin/blob/0.1.0/src/main/java/org/openjfx/gradle/metadatarule/JavaFXComponentMetadataRule.java)
       could then be used in isolation. That said, the rule does have a
