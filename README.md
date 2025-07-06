@@ -77,7 +77,7 @@ or
 [
 `CurrentArchitectureAttributeDisambiguationRule`](build-logic/src/main/kotlin/com/ianbrandt/buildlogic/attributes/nativeplatform/CurrentArchitectureAttributeDisambiguationRule.kt).
 [
-`OsDetector` extension functions](build-logic/src/main/kotlin/com/ianbrandt/buildlogic/plugins/osdetector/OsDetectorExtensions.kt)
+`OsDetector` extension properties](build-logic/src/main/kotlin/com/ianbrandt/buildlogic/plugins/osdetector/OsDetectorExtensions.kt)
 are used to translate its detected operating system and architecture values to
 corresponding values for Gradle's `OperatingSystemFamily` and
 `MachineArchitecture` attributes. Although not currently demonstrated,
