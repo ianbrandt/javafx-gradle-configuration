@@ -19,6 +19,20 @@ internal object JavaFXModules {
 	 */
 	const val JAVAFX_GROUP_ID = "org.openjfx"
 
+	private val ARTIFACT_NAME_TO_MODULE_NAME_MAP: Map<String, String> =
+		mapOf(
+			"javafx-base" to "javafx.base",
+			"javafx-controls" to "javafx.controls",
+			"javafx-fxml" to "javafx.fxml",
+			"javafx-graphics" to "javafx.graphics",
+			"javafx-media" to "javafx.media",
+			"javafx-swing" to "javafx.swing",
+			"javafx-web" to "javafx.web",
+		)
+
+	private val JAVAFX_ARTIFACT_NAME_PATTERN =
+		Regex("""^(javafx-[^-]+)-.+\.jar$""")
+
 	/**
 	 * Extracts information about JavaFX modules and their corresponding file
 	 * paths from the provided runtime classpath. This information includes the
@@ -72,17 +86,18 @@ internal object JavaFXModules {
 		javaFxModuleArtifacts: FileCollection
 	): Set<String> =
 		javaFxModuleArtifacts.map { moduleFile: File ->
-			when {
-				moduleFile.path.contains("javafx-base") -> "javafx.base"
-				moduleFile.path.contains("javafx-controls") -> "javafx.controls"
-				moduleFile.path.contains("javafx-fxml") -> "javafx.fxml"
-				moduleFile.path.contains("javafx-graphics") -> "javafx.graphics"
-				moduleFile.path.contains("javafx-media") -> "javafx.media"
-				moduleFile.path.contains("javafx-swing") -> "javafx.swing"
-				moduleFile.path.contains("javafx-web") -> "javafx.web"
-				else -> {
-					throw GradleException("Unknown JavaFX module: $moduleFile")
-				}
-			}
+
+			val artifactName =
+				JAVAFX_ARTIFACT_NAME_PATTERN.matchEntire(moduleFile.name)
+					?.groupValues?.get(1)
+					?: throw GradleException(
+						"Unable to extract JavaFX artifact name from " +
+							"'${moduleFile.path}'"
+					)
+
+			ARTIFACT_NAME_TO_MODULE_NAME_MAP[artifactName]
+				?: throw GradleException(
+					"Unknown JavaFX artifact name: '$artifactName'"
+				)
 		}.toSet()
 }
