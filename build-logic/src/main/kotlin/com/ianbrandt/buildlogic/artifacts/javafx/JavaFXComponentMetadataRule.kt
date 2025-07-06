@@ -48,7 +48,7 @@ abstract class JavaFXComponentMetadataRule : ComponentMetadataRule {
 		context.details.apply {
 
 			// Align JavaFX dependencies to the same version with a virtual BOM.
-			belongsTo("org.openjfx:javafx-bom:${id.version}", true)
+			belongsTo("org.openjfx:javafx-virtual-bom:${id.version}", true)
 
 			// Add native compile and runtime variants for all supported
 			// platforms.
