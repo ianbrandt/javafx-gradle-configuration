@@ -102,6 +102,12 @@ is used to select the JavaFX artifacts by group ID (see
 [
 `JavaFXModules.getJavaFxModulePathInfo()`](build-logic/src/main/kotlin/com/ianbrandt/buildlogic/conventions/javafx/JavaFXModules.kt)).
 
+## Discussion
+
+Discussion and feedback are welcomed in the
+["JavaFX dependencies via a ComponentMetadataRule instead of the JavaFX Gradle Plugin"](https://discuss.gradle.org/t/javafx-dependencies-via-a-componentmetadatarule-instead-of-the-javafx-gradle-plugin/44037)
+thread on the Gradle Forums.
+
 ## Upstream Issues
 
 The need for non-modular application and test suite handling is currently driven
