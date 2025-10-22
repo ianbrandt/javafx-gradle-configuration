@@ -38,10 +38,6 @@ version.ref = "jetbrains-annotations"
 module = "org.gradlex:jvm-dependency-conflict-resolution"
 version.ref = "jvmDependencyConflictResolution-gradlePlugin"
 
-[libraries.javafx]
-module = "org.openjfx:javafx"
-version.ref = "javafx"
-
 [libraries.javafx-base]
 module = "org.openjfx:javafx-base"
 version.ref = "javafx"
