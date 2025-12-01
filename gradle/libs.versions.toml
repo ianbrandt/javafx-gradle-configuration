@@ -1,21 +1,21 @@
 [versions]
 
-assertj = "3.27.3"
+assertj = "3.27.6"
 controlsfx = "11.0.3"
-dependencyAnalysis-gradlePlugin = "2.19.0"
+dependencyAnalysis-gradlePlugin = "3.5.1"
 equalsverifier = "4.0.2"
 javafx = "23.0.2"
 jetbrains-annotations = "26.0.2"
-junit = "5.13.3"
+junit = "6.0.1"
 jvmDependencyConflictResolution-gradlePlugin = "2.4"
-kotlin = "2.2.0"
+kotlin = "2.2.21"
 kotlinx-coroutines = "1.10.2"
 mockk = "1.14.3"
 osDetector-gradlePlugin = "1.7.3"
 slf4j = "2.0.17"
 testfx = "4.0.18"
 testfx-monocle = "21.0.2"
-versionsCheck-gradlePlugin = "0.52.0"
+versionsCheck-gradlePlugin = "0.53.0"
 
 [libraries]
 
