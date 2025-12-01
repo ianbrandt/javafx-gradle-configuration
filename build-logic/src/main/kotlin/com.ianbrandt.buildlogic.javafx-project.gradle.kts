@@ -1,3 +1,4 @@
+import com.ianbrandt.buildlogic.artifacts.controlsfx.ControlsFXComponentMetadataRule
 import com.ianbrandt.buildlogic.artifacts.javafx.JavaFXComponentMetadataRule
 
 plugins {
@@ -17,5 +18,8 @@ dependencies {
 		withModule<JavaFXComponentMetadataRule>("org.openjfx:javafx-media")
 		withModule<JavaFXComponentMetadataRule>("org.openjfx:javafx-swing")
 		withModule<JavaFXComponentMetadataRule>("org.openjfx:javafx-web")
+
+		// Fix ControlsFX metadata.
+		withModule<ControlsFXComponentMetadataRule>("org.controlsfx:controlsfx")
 	}
 }

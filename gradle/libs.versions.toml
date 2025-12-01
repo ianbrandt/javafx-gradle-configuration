@@ -1,6 +1,7 @@
 [versions]
 
 assertj = "3.27.3"
+controlsfx = "11.0.3"
 dependencyAnalysis-gradlePlugin = "2.19.0"
 equalsverifier = "4.0.2"
 javafx = "23.0.2"
@@ -21,6 +22,10 @@ versionsCheck-gradlePlugin = "0.52.0"
 [libraries.assertj]
 module = "org.assertj:assertj-core"
 version.ref = "assertj"
+
+[libraries.controlsfx]
+module = "org.controlsfx:controlsfx"
+version.ref = "controlsfx"
 
 [libraries.dependencyAnalysis-gradlePluginDependency]
 module = "com.autonomousapps.dependency-analysis:com.autonomousapps.dependency-analysis.gradle.plugin"
