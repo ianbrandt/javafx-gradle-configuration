@@ -11,6 +11,9 @@
 # IntelliJ
 out/
 
+# Junie
+.junie/
+
 ### Gradle template
 .gradle
 build/
